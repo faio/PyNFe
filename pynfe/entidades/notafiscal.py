@@ -183,8 +183,8 @@ class NotaFiscal(Entidade):
     #  - Total do IPI (somente leitura)
     totais_icms_total_ipi = Decimal()
 
-    #  - Valor Total do IPI devolvido 
-    # Deve ser informado quando preenchido o Grupo Tributos Devolvidos na emissão de nota finNFe=4 (devolução) nas operações com não contribuintes do IPI. 
+    #  - Valor Total do IPI devolvido
+    # Deve ser informado quando preenchido o Grupo Tributos Devolvidos na emissão de nota finNFe=4 (devolução) nas operações com não contribuintes do IPI.
     # Corresponde ao total da soma dos campos id:UA04.
     totais_icms_total_ipi_dev = Decimal()
 
@@ -244,7 +244,7 @@ class NotaFiscal(Entidade):
     # - Valor Total do FCP (Fundo de Combate à Pobreza)
     totais_fcp = Decimal()
 
-    # - Valor total do ICMS relativo Fundo de Combate à Pobreza (FCP) da UF de destino 
+    # - Valor total do ICMS relativo Fundo de Combate à Pobreza (FCP) da UF de destino
     totais_fcp_destino = Decimal()
 
      # - Valor Total do FCP (Fundo de Combate à Pobreza) retido por substituição tributária
@@ -253,7 +253,7 @@ class NotaFiscal(Entidade):
      # - Valor Total do FCP retido anteriormente por Substituição Tributária
     totais_fcp_st_ret = Decimal()
 
-    # - Valor total do ICMS Interestadual para a UF de destino 
+    # - Valor total do ICMS Interestadual para a UF de destino
     totais_icms_inter_destino = Decimal()
 
     # - Valor total do ICMS Interestadual para a UF do remetente
@@ -575,6 +575,14 @@ class NotaFiscalProduto(Entidade):
     # - Indica se valor do Item (vProd) entra no valor total da NF-e
     compoe_valor_total = 1
 
+    # - indica se valor do item entra no valor total da nota fiscal
+    # 0=Valor do item (vProd) não compõe o valor total da NF-e
+    # 1=Valor do item (vProd) compõe o valor total da NF-e (vProd)
+    ind_total = int()
+
+    #  - Lei da transparencia - Tributos aprox por item
+    valor_tributos_aprox = Decimal()
+
     #  - Valor total bruto (obrigatorio)
     valor_total_bruto = Decimal()
 
@@ -586,6 +594,8 @@ class NotaFiscalProduto(Entidade):
 
     #  - Produto especifico (seleciona de lista) - NF_PRODUTOS_ESPECIFICOS
     produto_especifico = str()
+
+    icms_csosn = str()
 
     # - Tributos
     #  - ICMS
@@ -619,7 +629,7 @@ class NotaFiscalProduto(Entidade):
     icms_motivo_desoneracao = int()
 
     #   - ICMS ST
-    #    - Modalidade de determinacao da BC ICMS ST  (seleciona de lista) - ICMS_MODALIDADES_ST    
+    #    - Modalidade de determinacao da BC ICMS ST  (seleciona de lista) - ICMS_MODALIDADES_ST
     icms_st_modalidade_determinacao_bc = str()
 
     #    - Percentual da margem de valor Adicionado do ICMS ST
@@ -826,6 +836,9 @@ class NotaFiscalProduto(Entidade):
     # - Declaracao de Importacao (lista 1 para * / ManyToManyField)
     declaracoes_importacao = None
 
+    #   - Código de Benefício Fiscal
+    cbenef = str()
+
     def __init__(self, *args, **kwargs):
         self.declaracoes_importacao = []
 
@@ -980,7 +993,7 @@ class NotaFiscalEntregaRetirada(Entidade):
     endereco_telefone = str()
 
 class NotaFiscalServico(Entidade):
-    
+
     # id do rps
     identificador = str()
     # tag competencia
